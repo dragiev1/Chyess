@@ -1,2 +1,2 @@
-# Chyess
+# CheckMateMe
 Chess Website
