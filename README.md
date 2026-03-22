@@ -33,7 +33,43 @@ No worries. Chyess provides a FREE, easy to learn, tutorial on how to begin.
 
 Below is a full layout of how this project is structured currently.
 
-![erd_diagram](readme\erd_diagram.png)
+### Entity Descriptions
+
+* `USER` Entity
+  * Purpose: The User entity represents chess players in the system. It serves as the central repository for all player-related information and tracks their overall gaming statistics.
+  * Attributes:
+    * *player_id* (PK): A unique UUID identifier for each player, ensuring global uniqueness across the system
+    * *name*: The player's display name
+    * *email*: Unique email address for account identification and communication
+    * *draws*: Running count of games that ended in a draw
+    * *win*: Total number of games won
+    * *losses*: Total number of games lost
+  * Role: 
+    * Acts as a reference table for player information
+    * Enables tracking of player performance over time
+    * Supports user authentication and profile management
+    * Provides data for leaderboards and statistics
+
+* `MATCH` Entity
+  * Purpose: The Match entity records individual chess games between two players. It captures the complete details of each game, including participants, timing, move sequence, and outcome.
+  * Attributes:
+    * *match_id* (PK): A unique UUID identifier for each match
+    * *white_player_id* (FK): References the User playing as white pieces
+    * *black_player_id* (FK): References the User playing as black pieces
+    * *time_started*: Timestamp when the match began
+    * *move_history*: JSON-formatted string storing the complete sequence of moves (*using JSON.stringify()*)
+    * *result*: Final outcome of the match (white wins, black wins, or draw)
+  * Role: 
+    * Creates a many-to-one relationship with User (each user can play multiple matches)
+    * Maintains game history for analysis and replay
+    * Enables calculation of player statistics and rankings
+    * Supports features like game review, learning, and pattern analysis
+    * The self-referencing relationship (two FKs to User) models the two-player nature of chess
+
+
+![erd_diagram](readme/erd_diagram.png)
+
+
 
 ## Business Rules
 
@@ -67,3 +103,33 @@ Statistics Derivation: `wins`/`losses`/`draws`on USER are derived attributes upd
 **History Integrity:** All past matches remain linked to this `user_id`. Opponents can still see the match result, but the opponent's name will appear as “Deleted Player”.
 
 **Leaderboards:** Users with `deleted_at != NULL` are excluded from active leaderboards.
+
+#
+## Database
+
+**Current Relations:**
+* `USER` (*player_id*, *name*, *email*, *draws*, *win*, *losses*)
+* `MATCH` (*match_id*, *white_player_id, *black_player_id*, *time_started*, *move_history*, *result*)
+
+**Normalization Check**:
+
+**1NF (First Normal Form):** 
+* All attributes contain atomic values 
+* No repeating groups 
+* Each column contains only one value 
+* Each record is unique (has primary key)
+
+**2NF (Second Normal Form):**
+* Already in 1NF
+* No partial dependencies 
+* `USER`: Attributes depend on the entire PK (`player_id`)
+* `MATCH`: Attributes depend on the entire PK (`match_id`)
+* Foreign keys (`white_player_id`, `black_player_id`) are properly separated
+
+**3NF (Third Normal Form):**
+* Already in 2NF 
+* No transitive dependencies 
+* `USER`: _name_, _email_, _draws_, _win_, _losses_ all depend directly on `player_id`
+* `MATCH`: `white_player_id`, `black_player_id`, `time_started`, `move_history`, result all depend directly on `match_id`
+
+
