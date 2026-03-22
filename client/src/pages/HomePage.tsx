@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import '../css/HomePage.css';
 import ContentCard from '../components/FeatureSection/ContentCard';
 import NavBar from '../components/NavBar';
+import parallaxBg from '../assets/parallax-background.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChessKnight } from '@fortawesome/free-solid-svg-icons';
 
@@ -31,7 +32,7 @@ const HomePage = () => {
           ref={parallaxRef}
           className="parallax-background"
           style={{
-            backgroundImage: 'url("/parallax-background.jpg")'
+            backgroundImage: `url(${parallaxBg})`
           }}
         />
         
