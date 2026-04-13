@@ -25,12 +25,12 @@ const NavBar = () => {
               <FontAwesomeIcon icon={faChessKnight} />
             </Link>
 
-            <Link to="/play" className="nav-links nav-text">
+            <Link to="Chyess/play" className="nav-links nav-text">
               PLAY
             </Link>
           </div>
           <div className="nav-right">
-            <Link to="/login" className="nav-links nav-text">
+            <Link to="Chyess/login" className="nav-links nav-text">
               LOGIN
             </Link>
           </div>
