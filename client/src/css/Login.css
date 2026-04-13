@@ -113,7 +113,7 @@
   bottom: 10px;
   right: 10px;
   font-size: 30rem;
-  color: var(--divider-light-1);
+  color: rgba(83, 255, 238, 0.5);
   transform-origin: bottom right;
   transform: rotate(-90deg);
   animation: knight-rotate 1.2s ease forwards;
