@@ -1,6 +1,6 @@
-// src/components/RegisterCard.tsx
 import { useState, type ChangeEvent } from "react";
 import type { User } from "../types/user";
+import "../css/ContentCard.css";
 
 const RegisterCard = () => {
   const [email, setEmail] = useState('');
