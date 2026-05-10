@@ -93,10 +93,32 @@ async function getPendingRequests(userId) {
   return await query(sql, [userId]);
 }
 
+async function getRequestById(requestId) {
+  let sql = `SELECT * FROM GameRequest WHERE id = ?`;
+  let [request] = await query(sql, [requestId]);
+  return request;
+}
+
+async function updateGameRequest(requestId, userId, updates) {
+  // Only allow updating pending requests owned by user
+  let sql = `UPDATE GameRequest SET ? WHERE id = ? AND requesterId = ? AND status = 'pending'`;
+  let result = await query(sql, [updates, requestId, userId]);
+  return result.affectedRows > 0;
+}
+
+async function deleteGameRequest(requestId, userId) {
+  let sql = `DELETE FROM GameRequest WHERE id = ? AND requesterId = ?`;
+  let result = await query(sql, [requestId, userId]);
+  return result.affectedRows > 0;
+}
+
 module.exports = {  
   createGameRequestTable,
   createGameRequest,
   findMatch,
   cancelGameRequest,
   getPendingRequests,
+  getRequestById,
+  updateGameRequest,
+  deleteGameRequest,
 };
