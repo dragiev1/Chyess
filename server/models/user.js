@@ -63,4 +63,9 @@ async function register(user) {
   return await login(user)
 }
 
+async function logout(userId, metadata = {}) {
+  console.log(`User ${userId} logged out}`, metadata);  
+  return { success: true, message: "Logout successful" };
+}
+
 module.exports = {getAllUsers, login, register}

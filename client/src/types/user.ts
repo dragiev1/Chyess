@@ -13,10 +13,3 @@ export interface LoginAttempt {
   timestamp: string;
 }
 
-export interface GameRequest {
-  requestedId: number;
-  mode: 'singleplayer' | 'multiplayer';
-  timeControl: 'bullet' | 'blitz' | 'rapid' | 'classical';
-  playerColor: 'white' | 'black' | 'random';
-  createdAt: string;
-}

@@ -31,4 +31,20 @@ router
   }
 })
 
+.post('/logout', async (req, res) => {
+    try {
+      const { userId } = req.body;
+      if (!userId) {
+        return res.status(400).send({ message: "userId is required" });
+      }
+      const result = await User.logout(userId, {
+        ipAddress: req.ip,
+        userAgent: req.get('User-Agent')
+      });
+      res.send(result);
+    } catch (err) {
+      res.status(400).send({ message: err.message });
+    }
+  });
+
 module.exports = router
