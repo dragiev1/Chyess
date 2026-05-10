@@ -1,22 +1,27 @@
 require('dotenv').config();
-import expres from "express";
-const app = express()
-import { join } from "path";
+const express = require("express");
+const { join } = require("path");
+const app = express();
 
-app.use(express.json())
-import userRoutes from "./server/routes/user";
+// Middleware.
+app.use(express.json());
 
-// CORS Middleware
-app.use(function(req, res, next) {
+// CORS.
+app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Request-With, Content-Type, Accept, Authorization");
-  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   next();
 });
 
-app.use(express.static(__dirname + "/public"))
-app.get('/', (req, res) => res.sendFile(join(__dirname, '/public/login.html')))
-app.use("/user", userRoutes)
+// Static files & homepage.
+app.use(express.static(join(__dirname, "public")));
+app.get('/', (req, res) => res.sendFile(join(__dirname, 'public/login.html')));
 
-const PORT = process.env.PORT || 3500 
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}...`))
+// Routes.
+app.use("/user", require("./server/routes/user"));           
+app.use("/game-requests", require("./server/routes/gameRequests")); 
+
+// Start server.
+const PORT = process.env.PORT || 3500;
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}...`));
