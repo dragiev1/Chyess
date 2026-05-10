@@ -73,3 +73,30 @@
     font-family: "Cormorant Garamond", serif;
   }
 }
+
+/* Red glow border for invalid inputs */
+.input-error {
+  border: 2px solid #ef4444 !important; /* Tailwind red-500 */
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2); /* Soft red glow */
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Error message text styling */
+.error-message {
+  display: block;
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+/* Optional: smooth focus transition */
+.login-input {
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: #3b82f6; /* blue-500 */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
